@@ -4,10 +4,17 @@ on:
   schedule:
     - cron: "0 15 * * *"
   workflow_dispatch:
+    inputs:
+      run_date:
+        description: "Optional date YYYY-MM-DD (defaults to today)"
+        required: false
+        type: string
 
 jobs:
   run:
     runs-on: ubuntu-latest
+    env:
+      RUN_DATE: ${{ inputs.run_date }}
 
     steps:
       - uses: actions/checkout@v3
@@ -19,5 +26,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: videos
+          name: videos-and-reports
           path: output/

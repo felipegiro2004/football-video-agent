@@ -1,8 +1,10 @@
 from datetime import date
 
 def generate_caption(match):
-    today = date.today()
-    return f"{today} - {match} - Highlights ⚽🔥 #football"
+    today = str(date.today())
+    if isinstance(match, dict):
+        return f"{today} - {match['home_team']} vs {match['away_team']} - {match['tournament']} ⚽🔥"
+    return f"{today} - {match} - Football ⚽🔥"
 
 def generate_lines():
     return [
