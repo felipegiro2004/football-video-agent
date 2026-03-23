@@ -22,3 +22,9 @@ def merge_clips(clips, output):
     inputs = " ".join([f'-i "{c}"' for c in clips])
     cmd = f'ffmpeg {inputs} -filter_complex "concat=n={len(clips)}:v=1:a=0" -y "{output}"'
     subprocess.run(cmd, shell=True)
+from gtts import gTTS
+
+def add_voice(text, output="assets/temp/voice.mp3"):
+    tts = gTTS(text)
+    tts.save(output)
+    return output
