@@ -1,5 +1,7 @@
 import os
-from scraper import search_matches, download_highlights
+from matches import get_all_matches
+from config import TOURNAMENTS
+from scraper import download_highlights
 from video import extract_audio, cut_clip, make_vertical, merge_clips
 from audio import detect_peaks
 from ai import generate_caption, generate_lines
@@ -8,7 +10,9 @@ def main():
     os.makedirs("assets/temp", exist_ok=True)
     os.makedirs("output", exist_ok=True)
 
-    matches = search_matches()
+    matches = get_all_matches(TOURNAMENTS)
+
+    print("📅 Partidos encontrados:", matches)
 
     for match in matches:
         print("⚽ Procesando:", match)
