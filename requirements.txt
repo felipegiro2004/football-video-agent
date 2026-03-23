@@ -1,0 +1,7 @@
+yt-dlp
+ffmpeg-python
+gtts
+librosa
+numpy
+requests
+beautifulsoup4
