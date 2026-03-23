@@ -10,6 +10,13 @@ Automated short-form football highlights pipeline for TikTok-style videos.
 - Writes one caption file per video.
 - Generates a JSON run report for debugging.
 
+## Sources strategy
+- Uses multiple sources instead of YouTube-only:
+  - Dailymotion API search
+  - YouTube search via yt-dlp (optional)
+  - Web fallback links (DuckDuckGo + known video domains: X/Twitter, TikTok, Instagram, Facebook, Vimeo, etc.)
+- If no highlight is downloadable, it still creates a placeholder vertical output to avoid empty runs.
+
 ## Configure date
 Use either option:
 

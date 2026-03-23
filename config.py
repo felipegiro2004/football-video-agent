@@ -20,3 +20,20 @@ OUTPUT_RETENTION_DAYS = 10
 HIGHLIGHT_SEARCH_RESULTS = 5
 HIGHLIGHT_MIN_DURATION_SECONDS = 45
 MAX_HIGHLIGHT_DURATION_SECONDS = 20 * 60
+
+# Downloader behavior
+YTDLP_COOKIES_FILE = None  # optional path to Netscape cookies file
+ENABLE_YOUTUBE_SEARCH = True
+ENABLE_WEB_FALLBACK_SEARCH = True
+ENABLE_DAILYMOTION_SEARCH = True
+
+# Public web fallback domains/keywords to search for candidate links.
+WEB_FALLBACK_PLATFORMS = [
+    "dailymotion",
+    "vimeo",
+    "x",
+    "twitter",
+    "tiktok",
+    "instagram",
+    "facebook",
+]

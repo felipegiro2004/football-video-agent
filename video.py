@@ -112,3 +112,28 @@ def merge_clips(clips, output):
     )
     result = _run(args)
     return result.returncode == 0 and os.path.exists(output)
+
+
+def create_placeholder_video(output_file, text, duration=15):
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    drawtext = (
+        "drawtext=text='{text}':x=(w-text_w)/2:y=(h-text_h)/2:"
+        "fontsize=52:fontcolor=white:borderw=2:bordercolor=black"
+    ).format(text=text.replace(":", "\\:").replace("'", "\\'"))
+    cmd = [
+        "ffmpeg",
+        "-f",
+        "lavfi",
+        "-i",
+        f"color=c=black:s=1080x1920:d={duration}",
+        "-vf",
+        drawtext,
+        "-c:v",
+        "libx264",
+        "-pix_fmt",
+        "yuv420p",
+        "-y",
+        output_file,
+    ]
+    result = _run(cmd)
+    return result.returncode == 0 and os.path.exists(output_file)

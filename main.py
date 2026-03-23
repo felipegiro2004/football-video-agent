@@ -19,6 +19,7 @@ from config import (
 )
 from scraper import download_highlights
 from video import (
+    create_placeholder_video,
     cut_clip,
     extract_audio,
     get_video_duration,
@@ -132,8 +133,22 @@ def process_match(match):
 
     highlight_path = download_highlights(match)
     if not highlight_path or not os.path.exists(highlight_path):
-        LOGGER.error("No highlight found for %s", match["match_name"])
-        return {"ok": False, "reason": "highlight_not_found", "match": match["match_name"]}
+        LOGGER.error("No highlight found for %s. Creating placeholder output.", match["match_name"])
+        video_output, caption_output = build_output_paths(match)
+        placeholder_text = f"{match['home_team']} vs {match['away_team']}\\nHighlights unavailable"
+        placeholder_ok = create_placeholder_video(video_output, placeholder_text, duration=15)
+        caption = generate_caption(match)
+        with open(caption_output, "w", encoding="utf-8") as handle:
+            handle.write(caption)
+        return {
+            "ok": placeholder_ok,
+            "reason": "placeholder_generated" if placeholder_ok else "highlight_not_found",
+            "match": match["match_name"],
+            "tournament": match["tournament"],
+            "video_output": video_output if placeholder_ok else None,
+            "caption_output": caption_output,
+            "clips_used": 0,
+        }
 
     audio_path = extract_audio(highlight_path)
     starts = choose_clip_starts(highlight_path, audio_path)
